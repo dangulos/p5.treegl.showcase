@@ -8,18 +8,6 @@ p5 `iframe` [shortcodes](https://gohugo.io/content-management/shortcodes/) embed
 
 All parameters are optional but `sketch`. Default values are shown in the above snippet but for `libs*`. Up to `lib5` libs may be specified.
 
-## Color relativity
-
-Look at this [brief explanation](https://p5js.org/examples/color-relativity.html) about what color relativity is.
-
-{{< details title="p5-iframe markdown" open=false >}}
-```html
-{{</* p5-iframe sketch="/showcase/sketches/colors.js" width="725" height="425 */>}}
-```
-{{< /details >}}
-
-{{< p5-iframe sketch="/showcase/sketches/colors.js" width="725" height="425" >}}
-
 ## Third party libraries
 
 Example adapted from [p5.EasyCam](https://github.com/freshfork/p5.EasyCam/blob/master/examples/QuickStart/QuickStart.js).
