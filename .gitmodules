@@ -1,3 +1,9 @@
 [submodule "themes/book"]
 	path = themes/book
 	url = https://github.com/alex-shpak/hugo-book
+[submodule "content/libs/content/libs/p5.treegl"]
+	path = content/libs/content/libs/p5.treegl
+	url = https://github.com/VisualComputing/p5.treegl.git
+[submodule "content/libs/p5.treegl"]
+	path = content/libs/p5.treegl
+	url = https://github.com/VisualComputing/p5.treegl.git
