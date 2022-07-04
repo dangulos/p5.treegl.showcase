@@ -26,7 +26,7 @@ El parámetro **bits** permite elegir qué ejes se dibujan y a pesar de que el p
 
 En la proyección ortográfica, la cámara que está renderizando la escena no identifica profundidad. Esto implica que independientemente de qué tan lejos se encuentra un objeto de la cámara, éste conservará su tamaño. 
 
-{{< p5-iframe sketch="/showcase/sketches/components/frustum/orthogonalFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
+{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/orthogonalFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
 
 ### code 
 
@@ -38,7 +38,7 @@ En la proyección ortográfica, la cámara que está renderizando la escena no i
 
 Esta proyección es la más similar al ojo humando. En la proyección perspectiva, la cámara da una sansación de profundidad. Entre más lejano se encuentre un objeto de la cámara, más pequeño se ve.
 
-{{< p5-iframe sketch="/showcase/sketches/components/frustum/perspectiveFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
+{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/perspectiveFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
 
 ### code 
 
