@@ -1,4 +1,4 @@
-baseURL = "http://dangulos.github.io/p5.treegl.showcase/"
+baseURL = "https://dangulos.github.io/p5.treegl.showcase/"
 languageCode = "en-us"
 title = "P5.treegl Showcase"
 theme = 'book'
