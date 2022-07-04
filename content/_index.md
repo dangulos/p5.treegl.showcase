@@ -1,33 +1,10 @@
 ---
-title: Introduction
+title: Introducción
 type: docs
 ---
 
-# Showcase Template
+# P5.treegl Showcase
 
-Welcome to the [gohugo](https://gohugo.io/) template to create rich content [academic reports](https://www.wordy.com/writers-workshop/writing-an-academic-report/) having [p5.js](https://p5js.org/) sketches.
+En este informe se presentan distintas funciones incluidas en la librería [p5.treegl.js](https://github.com/VisualComputing/p5.treegl) con sus parámetros, ejemplos de su funcionamiento y código. 
 
-## Hacking
-
-Install the [gohugo](https://gohugo.io/) [static site generator](https://jamstack.org/generators/) then:
-
-```sh
-$git clone https://github.com/VisualComputing/showcase
-$cd showcase
-$git submodule update --init --recursive
-$hugo server -D --disableFastRender
-```
-
-Deploy with `$git push` after redefined `baseURL` in `config.toml` which should point to your actual public remote.
-
-{{< hint info >}}
-The **showcase** template uses the [hugo-book](https://github.com/alex-shpak/hugo-book) theme by default. Check the [hugo themes site](https://themes.gohugo.io/) if you wish to add other ones.
-{{< /hint >}}
-
-{{< hint info >}}
-If you forked the repo don't forget to activate the [actions](https://github.com/VisualComputing/showcase/actions).
-{{< /hint >}}
-
-{{< hint info >}}
-If you changed the repo name don't forget to update all the js related (both sketches and assets) urls.
-{{< /hint >}}
+{{< p5-iframe sketch="/showcase/sketches/components/intro/sketch.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="400" >}}

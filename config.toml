@@ -1,6 +1,6 @@
 baseURL = "https://visualcomputing.github.io/showcase"
 languageCode = "en-us"
-title = "Showcase Template"
+title = "P5.treegl Showcase"
 theme = 'book'
 
 # Book configuration
