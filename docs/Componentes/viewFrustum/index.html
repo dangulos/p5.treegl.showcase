@@ -1,0 +1,233 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="ViewFrustum # Treegl permite visualizar el volumen que está renderizando una cámara por medio de un frustum. Éste frustum mustra la posición de la pantalla, la distancia de renderizado y la forma que esta toma.
+Parámetros # fbo p5.RendererGL | p5.Graphics : Es el renderer que va a mostrar el frustum. bits number : Bitmask para controlar diversos parámetros como qué plános se dibujan. viewer function : Callback para mostrar la representación visual del fbo."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="ViewFrustum # Treegl permite visualizar el volumen que está renderizando una cámara por medio de un frustum. Éste frustum mustra la posición de la pantalla, la distancia de renderizado y la forma que esta toma.
+Parámetros # fbo p5.RendererGL | p5.Graphics : Es el renderer que va a mostrar el frustum. bits number : Bitmask para controlar diversos parámetros como qué plános se dibujan. viewer function : Callback para mostrar la representación visual del fbo."><meta property="og:type" content="article"><meta property="og:url" content="https://visualcomputing.github.io/showcase/docs/Componentes/viewFrustum/"><meta property="article:section" content="docs"><meta property="article:modified_time" content="2022-07-04T12:27:32-05:00"><title>View Frustum | P5.treegl Showcase</title><link rel=manifest href=/showcase/manifest.json><link rel=icon href=/showcase/favicon.png type=image/x-icon><link rel=stylesheet href=/showcase/book.min.ab46de3e725a6415339a37bba23a0067534a37289b063c9f8d011515a63097a8.css integrity="sha256-q0bePnJaZBUzmje7ojoAZ1NKNyibBjyfjQEVFaYwl6g=" crossorigin=anonymous><script defer src=/showcase/flexsearch.min.js></script>
+<script defer src=/showcase/en.search.min.967a1ae844d272da1c4a62f8ef2239a98a49ef8ec2849de950eae7d35240a0ce.js integrity="sha256-lnoa6ETSctocSmL47yI5qYpJ747ChJ3pUOrn01JAoM4=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/showcase/><span>P5.treegl Showcase</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li class=book-section-flat><input type=checkbox id=section-4f64e1ecb245dc4a145fefe6f0f6c7ac class=toggle checked>
+<label for=section-4f64e1ecb245dc4a145fefe6f0f6c7ac class="flex justify-between"><a role=button>Componentes</a></label><ul><li><a href=/showcase/docs/Componentes/Arrow/>Arrow</a></li><li><a href=/showcase/docs/Componentes/Axes/>Axes</a></li><li><a href=/showcase/docs/Componentes/Bagel/>Bagel</a></li><li><a href=/showcase/docs/Componentes/Bullseye/>Bullseye</a></li><li><a href=/showcase/docs/Componentes/Grid/>Grid</a></li><li><a href=/showcase/docs/Componentes/Mobius_Strip/>Mobius Strip</a></li><li><a href=/showcase/docs/Componentes/Pipe/>Pipe</a></li><li><a href=/showcase/docs/Componentes/viewFrustum/ class=active>View Frustum</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/showcase/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>View Frustum</strong>
+<label for=toc-control><img src=/showcase/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#viewfrustum>ViewFrustum</a><ul><li><a href=#parámetros>Parámetros</a></li><li><a href=#uso-de-la-bitmask>Uso de la Bitmask</a></li><li><a href=#proyección-ortográfica>Proyección ortográfica</a><ul><li><a href=#code>code</a></li></ul></li><li><a href=#proyección-perspectiva>Proyección perspectiva</a><ul><li><a href=#code-1>code</a></li></ul></li></ul></li></ul></nav></aside></header><article class=markdown><h1 id=viewfrustum>ViewFrustum
+<a class=anchor href=#viewfrustum>#</a></h1><p>Treegl permite visualizar el volumen que está renderizando una cámara por medio de un frustum. Éste frustum mustra la posición de la pantalla, la distancia de renderizado y la forma que esta toma.</p><h2 id=parámetros>Parámetros
+<a class=anchor href=#par%c3%a1metros>#</a></h2><ul><li><strong>fbo</strong> <em>p5.RendererGL | p5.Graphics</em> : Es el renderer que va a mostrar el frustum.</li><li><strong>bits</strong> <em>number</em> : Bitmask para controlar diversos parámetros como qué plános se dibujan.</li><li><strong>viewer</strong> <em>function</em> : Callback para mostrar la representación visual del fbo.</li></ul><h2 id=uso-de-la-bitmask>Uso de la Bitmask
+<a class=anchor href=#uso-de-la-bitmask>#</a></h2><p>El parámetro <strong>bits</strong> permite elegir qué ejes se dibujan y a pesar de que el parámetro que se ingresa es un número, funciona como una <a href=https://en.wikipedia.org/wiki/Mask_%28computing%29>Bitmask</a> (Similar a los permisos numéricos del comando <a href=https://en.wikipedia.org/wiki/Chmod#Numerical_permissions>chmod</a> en GNU/Linux). La bitmask permite que se puedan elegir distintas opciones en un sólo parámetro. La librería añade el objeto Tree que permite un acceso sencillo a los bits necesarios para marcar opciones. La distribución de las selecciones posibles se encuentra ordenada de la siguiente manera:</p><table><thead><tr><th>Description</th><th>Valor en Tree</th><th>Binario</th><th>Decimal</th></tr></thead><tbody><tr><td>Dibuja el plano lejano</td><td>Tree.NEAR</td><td>0000001</td><td>1</td></tr><tr><td>Dibuja el plano cercano</td><td>Tree.FAR</td><td>0000010</td><td>2</td></tr><tr><td>Dibuja el límite izquierdo</td><td>Tree.LEFT</td><td>0000100</td><td>4</td></tr><tr><td>Dibuja el límite derecho</td><td>Tree.RIGHT</td><td>0001000</td><td>8</td></tr><tr><td>Dibuja el límite inferior</td><td>Tree.BOTTOM</td><td>0010000</td><td>16</td></tr><tr><td>Dibuja el límite superior</td><td>Tree.TOP</td><td>0100000</td><td>32</td></tr><tr><td>Dibuja el cuerpo del frostum</td><td>Tree.BODY</td><td>1000000</td><td>64</td></tr></tbody></table><h2 id=proyección-ortográfica>Proyección ortográfica
+<a class=anchor href=#proyecci%c3%b3n-ortogr%c3%a1fica>#</a></h2><p>En la proyección ortográfica, la cámara que está renderizando la escena no identifica profundidad. Esto implica que independientemente de qué tan lejos se encuentra un objeto de la cámara, éste conservará su tamaño.</p><iframe id=orthogonalFrustum style=width:400px;height:700px srcdoc="
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <script src=https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js></script>
+            <script src=https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js></script>
+             <script src=https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js></script> 
+             <script src=/showcase/libs/p5.treegl/p5.treegl.js></script> 
+             <script src=https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js></script> 
+             <script src=https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js></script> 
+            
+            <script src=/showcase/sketches/components/frustum/orthogonalFrustum.js></script>
+          </head>
+          <body>
+          </body>
+        </html>
+      "></iframe><h3 id=code>code
+<a class=anchor href=#code>#</a></h3><details><summary>sketch.js</summary><div class=markdown-inner><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#e6db74>&#39;use strict&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>fbo1</span>, <span style=color:#a6e22e>fbo2</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>cam1</span>, <span style=color:#a6e22e>cam2</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>height</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>600</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>boxes</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>persp</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>right</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>frustum_width</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>600</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>bottom</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>topa</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>frustum_height</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>600</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>far</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>500</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>gui</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>setup</span>() {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>createCanvas</span>(<span style=color:#ae81ff>300</span>, <span style=color:#ae81ff>600</span>);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGraphics</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>WEBGL</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGraphics</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>WEBGL</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>ortho</span>(<span style=color:#f92672>-</span><span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#f92672>-</span><span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>height</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>height</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// FBOs cams
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam1</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Dw</span>.<span style=color:#a6e22e>EasyCam</span>(<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>_renderer</span>, { <span style=color:#a6e22e>distance</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>200</span> });
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>state1</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>getState</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>attachMouseListeners</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>_renderer</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>state_reset</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>state1</span>; <span style=color:#75715e>// state to use on reset (double-click/tap)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>setViewport</span>([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>height</span>]);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Dw</span>.<span style=color:#a6e22e>EasyCam</span>(<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>_renderer</span>, { <span style=color:#a6e22e>rotation</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>0.94</span>, <span style=color:#ae81ff>0.33</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>] });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>attachMouseListeners</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>_renderer</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>state2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>getState</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>state_reset</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>state2</span>; <span style=color:#75715e>// state to use on reset (double-click/tap)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>setViewport</span>([<span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>height</span>]);
+</span></span><span style=display:flex><span>	document.<span style=color:#a6e22e>oncontextmenu</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span> () {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>	};
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// scene
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>colorMode</span>(<span style=color:#a6e22e>RGB</span>, <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>trange</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>;
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>boxes</span> <span style=color:#f92672>=</span> [];
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>100</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>boxes</span>.<span style=color:#a6e22e>push</span>({
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>position</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>createVector</span>(
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>,
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>,
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>
+</span></span><span style=display:flex><span>			),
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>size</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>25</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>8</span>,
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>color</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>color</span>(<span style=color:#a6e22e>random</span>(), <span style=color:#a6e22e>random</span>(), <span style=color:#a6e22e>random</span>()),
+</span></span><span style=display:flex><span>		});
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>print</span>(<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>bounds</span>());
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>gui</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGui</span>(<span style=color:#e6db74>&#39;Frostum&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>gui</span>.<span style=color:#a6e22e>addGlobals</span>(<span style=color:#e6db74>&#39;frustum_width&#39;</span>, <span style=color:#e6db74>&#39;frustum_height&#39;</span>, <span style=color:#e6db74>&#39;far&#39;</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>ortho</span>(<span style=color:#f92672>-</span><span style=color:#a6e22e>frustum_width</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>frustum_width</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#f92672>-</span><span style=color:#a6e22e>frustum_height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>frustum_height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>far</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>background</span>(<span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>125</span>, <span style=color:#ae81ff>115</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>reset</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>axes</span>({ <span style=color:#a6e22e>size</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>100</span>, <span style=color:#a6e22e>bits</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>X</span> <span style=color:#f92672>|</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>YNEG</span> });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>grid</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>fbo1</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>beginHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>image</span>(<span style=color:#a6e22e>fbo1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>endHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>background</span>(<span style=color:#ae81ff>130</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>reset</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>axes</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>grid</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>fbo2</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>strokeWeight</span>(<span style=color:#ae81ff>3</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>stroke</span>(<span style=color:#e6db74>&#39;magenta&#39;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>color</span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0.3</span>));
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>viewFrustum</span>({ <span style=color:#a6e22e>fbo</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fbo1</span>, <span style=color:#a6e22e>bits</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>NEAR</span> <span style=color:#f92672>|</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>FAR</span> });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>beginHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>image</span>(<span style=color:#a6e22e>fbo2</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>endHUD</span>();
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>graphics</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>boxes</span>.<span style=color:#a6e22e>forEach</span>(<span style=color:#a6e22e>box</span> =&gt; {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>color</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>translate</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>position</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>box</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>size</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>	});
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div></details><h2 id=proyección-perspectiva>Proyección perspectiva
+<a class=anchor href=#proyecci%c3%b3n-perspectiva>#</a></h2><p>Esta proyección es la más similar al ojo humando. En la proyección perspectiva, la cámara da una sansación de profundidad. Entre más lejano se encuentre un objeto de la cámara, más pequeño se ve.</p><iframe id=perspectiveFrustum style=width:400px;height:700px srcdoc="
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <script src=https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js></script>
+            <script src=https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js></script>
+             <script src=https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js></script> 
+             <script src=/showcase/libs/p5.treegl/p5.treegl.js></script> 
+             <script src=https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js></script> 
+             <script src=https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js></script> 
+            
+            <script src=/showcase/sketches/components/frustum/perspectiveFrustum.js></script>
+          </head>
+          <body>
+          </body>
+        </html>
+      "></iframe><h3 id=code-1>code
+<a class=anchor href=#code-1>#</a></h3><details><summary>sketch.js</summary><div class=markdown-inner><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#e6db74>&#39;use strict&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>fbo1</span>, <span style=color:#a6e22e>fbo2</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>cam1</span>, <span style=color:#a6e22e>cam2</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>height</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>600</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>boxes</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>persp</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>far</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>500</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>fovy</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>gui</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>setup</span>() {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>createCanvas</span>(<span style=color:#ae81ff>300</span>, <span style=color:#ae81ff>600</span>);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGraphics</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>WEBGL</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGraphics</span>(<span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>WEBGL</span>);
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// FBOs cams
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam1</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Dw</span>.<span style=color:#a6e22e>EasyCam</span>(<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>_renderer</span>, { <span style=color:#a6e22e>distance</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>200</span> });
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>state1</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>getState</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>attachMouseListeners</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>_renderer</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>state_reset</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>state1</span>; <span style=color:#75715e>// state to use on reset (double-click/tap)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam1</span>.<span style=color:#a6e22e>setViewport</span>([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>height</span>]);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Dw</span>.<span style=color:#a6e22e>EasyCam</span>(<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>_renderer</span>, { <span style=color:#a6e22e>rotation</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>0.94</span>, <span style=color:#ae81ff>0.33</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>] });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>attachMouseListeners</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>_renderer</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>state2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>getState</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>state_reset</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>state2</span>; <span style=color:#75715e>// state to use on reset (double-click/tap)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>cam2</span>.<span style=color:#a6e22e>setViewport</span>([<span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>width</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>, <span style=color:#a6e22e>height</span>]);
+</span></span><span style=display:flex><span>	document.<span style=color:#a6e22e>oncontextmenu</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span> () {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>	};
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// scene
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>colorMode</span>(<span style=color:#a6e22e>RGB</span>, <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>trange</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>;
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>boxes</span> <span style=color:#f92672>=</span> [];
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>100</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>boxes</span>.<span style=color:#a6e22e>push</span>({
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>position</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>createVector</span>(
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>,
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>,
+</span></span><span style=display:flex><span>				(<span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>trange</span>
+</span></span><span style=display:flex><span>			),
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>size</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>random</span>() <span style=color:#f92672>*</span> <span style=color:#ae81ff>25</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>8</span>,
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>color</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>color</span>(<span style=color:#a6e22e>random</span>(), <span style=color:#a6e22e>random</span>(), <span style=color:#a6e22e>random</span>()),
+</span></span><span style=display:flex><span>		});
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>print</span>(<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>bounds</span>());
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>gui</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>createGui</span>(<span style=color:#e6db74>&#39;Frostum&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>gui</span>.<span style=color:#a6e22e>addGlobals</span>(<span style=color:#e6db74>&#39;fovy&#39;</span>, <span style=color:#e6db74>&#39;far&#39;</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>draw</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>perspective</span>(<span style=color:#a6e22e>fovy</span><span style=color:#f92672>*</span>(<span style=color:#a6e22e>PI</span><span style=color:#f92672>/</span><span style=color:#ae81ff>3</span>)<span style=color:#f92672>/</span><span style=color:#ae81ff>100</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>10</span>, <span style=color:#a6e22e>far</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>background</span>(<span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>125</span>, <span style=color:#ae81ff>115</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>reset</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>axes</span>({ <span style=color:#a6e22e>size</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>100</span>, <span style=color:#a6e22e>bits</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>X</span> <span style=color:#f92672>|</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>YNEG</span> });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo1</span>.<span style=color:#a6e22e>grid</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>fbo1</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>beginHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>image</span>(<span style=color:#a6e22e>fbo1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>endHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>background</span>(<span style=color:#ae81ff>130</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>reset</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>axes</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>grid</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>fbo2</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>strokeWeight</span>(<span style=color:#ae81ff>3</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>stroke</span>(<span style=color:#e6db74>&#39;magenta&#39;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>color</span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0.3</span>));
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>viewFrustum</span>({ <span style=color:#a6e22e>fbo</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fbo1</span>, <span style=color:#a6e22e>bits</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>NEAR</span> <span style=color:#f92672>|</span> <span style=color:#a6e22e>Tree</span>.<span style=color:#a6e22e>FAR</span> });
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fbo2</span>.<span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>beginHUD</span>();
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>image</span>(<span style=color:#a6e22e>fbo2</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>height</span><span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>endHUD</span>();
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>scene</span>(<span style=color:#a6e22e>graphics</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>boxes</span>.<span style=color:#a6e22e>forEach</span>(<span style=color:#a6e22e>box</span> =&gt; {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>push</span>();
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>color</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>translate</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>position</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>box</span>(<span style=color:#a6e22e>box</span>.<span style=color:#a6e22e>size</span>);
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>graphics</span>.<span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>	});
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div></details></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/visualcomputing/showcase/commit/435847b439fade91cfc60284968e3aa7c3e187ed title='Last modified by dangulos | July 4, 2022' target=_blank rel=noopener><img src=/showcase/svg/calendar.svg class=book-icon alt=Calendar>
+<span>July 4, 2022</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#viewfrustum>ViewFrustum</a><ul><li><a href=#parámetros>Parámetros</a></li><li><a href=#uso-de-la-bitmask>Uso de la Bitmask</a></li><li><a href=#proyección-ortográfica>Proyección ortográfica</a><ul><li><a href=#code>code</a></li></ul></li><li><a href=#proyección-perspectiva>Proyección perspectiva</a><ul><li><a href=#code-1>code</a></li></ul></li></ul></li></ul></nav></div></aside></main></body></html>
