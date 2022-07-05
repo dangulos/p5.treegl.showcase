@@ -1,6 +1,6 @@
 // gui params
-var mayorRadius = 16;
-var minorRadius = 20;
+var mayorRadius = 140;
+var minorRadius = 100;
 var mayorDetail = 16;
 var minorDetail = 16;
 
@@ -12,14 +12,11 @@ function setup() {
 
 	easycam = createEasyCam();
 
-	gui = createGui('Axes');
+	gui = createGui('Double click to close');
 	gui.addGlobals('mayorRadius', 'minorRadius', 'mayorDetail', 'minorDetail');
 }
 
 function draw() {
-	rotateX(-0.5);
-	rotateY(-0.5);
-
 	background(255);
 	stroke(0);
 	strokeWeight(1);

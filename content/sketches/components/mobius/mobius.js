@@ -1,6 +1,6 @@
 // gui params
 var detail = 16;
-var radius = 20;
+var radius = 100;
 
 var gui;
 
@@ -10,13 +10,11 @@ function setup() {
 
 	easycam = createEasyCam();
 
-	gui = createGui('Axes');
+	gui = createGui('Double click to close');
 	gui.addGlobals('detail', 'radius');
 }
 
 function draw() {
-	rotateX(-0.5);
-	rotateY(-0.5);
 
 	background(255);
 	stroke(0);

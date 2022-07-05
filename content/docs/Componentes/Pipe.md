@@ -1,19 +1,23 @@
 # Pipe
 
-Un pipe es un cilindro cuyas bases se pueden rotar dado un vector específico. Esta figura es útil porque cuando se concatenan varias se pueden hacer figuras más completas.
+A pipe is a cylinder whose bases can be rotated given a specified vector. This figure is useful because when several are connected, more complex figures can be made.
 
-## Parámetros 
+## Params 
 
-- **detail** *number* : El detalle del cilindro. Entre mayor sea, más suave se ve. 
-- **topRadius** *number* : Radio de la base superior del cilindro.
-- **bottomRadius** *number* : Radio de la base inferior del cilindro.
-- **height** *number* : La altura del cilindro.
-- **topNormal** *p5.Vector* : Vector que indica cómo está inclinada la base superior del cilindro.
-- **bottomNormal** *p5.Vector* : Vector que indica cómo está inclinada la base inferior del cilindro.
+| Name | PropType | description |
+| ----------- | ----------- | ----------- |
+| **detail** | *number* | Pipe's detail.  The bigger it is, the smoother the pipe looks. |
+| **topRadius** | *number* | Top base radius. |
+| **bottomRadius** | *number* | Bottom base radius. |
+| **height** | *number* | Pipe's height. |
+| **topNormal** | *p5.Vector* | Vector indicating how the top base of the cylinder is tilted. |
+| **bottomNormal** | *p5.Vector* | Vector indicating how the bottom base of the cylinder is tilted. |
 
 ## Showcase
 
-{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/pipe/pipe.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="450" height="450" >}}
+{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/pipe/pipe.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="475" height="475" >}}
+
+`Click and drag to move the camera arround!`
 
 ### code 
 

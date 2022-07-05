@@ -1,32 +1,36 @@
 # ViewFrustum
 
-Treegl permite visualizar el volumen que está renderizando una cámara por medio de un frustum. Éste frustum mustra la posición de la pantalla, la distancia de renderizado y la forma que esta toma. 
+Treegl allows you to visualize the volume that a camera is rendering through a frustum. This frustum shows the position of the screen and the camera, the render distance and the shape it has.
 
-## Parámetros 
+## Params
 
-- **fbo** *p5.RendererGL | p5.Graphics* : Es el renderer que va a mostrar el frustum. 
-- **bits** *number* : Bitmask para controlar diversos parámetros como qué plános se dibujan.
-- **viewer** *function* : Callback para mostrar la representación visual del fbo.
+| Name | PropType | description |
+| ----------- | ----------- | ----------- |
+| **fbo** | *p5.RendererGL or p5.Graphics* | The renderer to be shown by the frustum. |
+| **bits** | *number* | Bitmask to choose which planes to draw. |
+| **viewer** | *function* | Callback that allows to draw a visual representation of the fbo's position. |
 
-## Uso de la Bitmask
+## Bitmask
 
-El parámetro **bits** permite elegir qué ejes se dibujan y a pesar de que el parámetro que se ingresa es un número, funciona como una [Bitmask](https://en.wikipedia.org/wiki/Mask_(computing)) (Similar a los permisos numéricos del comando [chmod](https://en.wikipedia.org/wiki/Chmod#Numerical_permissions) en GNU/Linux). La bitmask permite que se puedan elegir distintas opciones en un sólo parámetro. La librería añade el objeto Tree que permite un acceso sencillo a los bits necesarios para marcar opciones. La distribución de las selecciones posibles se encuentra ordenada de la siguiente manera: 
+The **bits** parameter which planes to show. Even though this param is a number, it works as a [Bitmask](https://en.wikipedia.org/wiki/Mask_(computing)) (Similar [chmod](https://en.wikipedia.org/wiki/Chmod#Numerical_permissions)'s numerical permissions in GNU/Linux). This bitmask allows different options to be chosen in a sigle parameter. `p5.treegl` adds the `Tree` object which allows easy access to all the necesary bits to mark different options. Each option is ordered as follows: 
 
 | Description | Valor en Tree | Binario | Decimal |
 | ----------- | ----------- | ----------- | ----------- |
-| Dibuja el plano lejano | Tree.NEAR | 0000001 | 1 |
-| Dibuja el plano cercano | Tree.FAR | 0000010 | 2 |
-| Dibuja el límite izquierdo | Tree.LEFT | 0000100 | 4 |
-| Dibuja el límite derecho | Tree.RIGHT | 0001000 | 8 |
-| Dibuja el límite inferior | Tree.BOTTOM | 0010000 | 16 |
-| Dibuja el límite superior | Tree.TOP | 0100000 | 32 |
-| Dibuja el cuerpo del frostum | Tree.BODY | 1000000 | 64 |
+| Draws the far plane | Tree.NEAR | 0000001 | 1 |
+| Draws the near plane | Tree.FAR | 0000010 | 2 |
+| Draws the left boundary | Tree.LEFT | 0000100 | 4 |
+| Draws the right boundary | Tree.RIGHT | 0001000 | 8 |
+| Draws the bottom boundary | Tree.BOTTOM | 0010000 | 16 |
+| Draws the top boundary | Tree.TOP | 0100000 | 32 |
+| Draws the frustum's body | Tree.BODY | 1000000 | 64 |
 
-## Proyección ortográfica
+## Orthographic Projection
 
-En la proyección ortográfica, la cámara que está renderizando la escena no identifica profundidad. Esto implica que independientemente de qué tan lejos se encuentra un objeto de la cámara, éste conservará su tamaño. 
+In orthographic projection, the camera that is rendering the scene does not identify depth. This means that no matter how far away an object is from the camera, it will retain its size. It's often used for schematics, architectural drawings, 3D software when lining up vertices and mesuring distances as they also remain constant.
 
-{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/orthogonalFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
+`Click and drag to move the camera arround!`
+
+{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/orthogonalFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="425" height="725" >}}
 
 ### code 
 
@@ -34,11 +38,13 @@ En la proyección ortográfica, la cámara que está renderizando la escena no i
 {{% code file="/content/sketches/components/frustum/orthogonalFrustum.js" language="js" %}}
 {{< /details >}}
 
-## Proyección perspectiva
+## Perspective Projection
 
-Esta proyección es la más similar al ojo humando. En la proyección perspectiva, la cámara da una sansación de profundidad. Entre más lejano se encuentre un objeto de la cámara, más pequeño se ve.
+This projection is the most similar to the human eye. In perspective projection, the camera gives a sense of depth. The further away an object is from the camera, the smaller it appears.
 
-{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/perspectiveFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="400" height="700" >}}
+`Click and drag to move the camera arround!`
+
+{{< p5-iframe sketch="/p5.treegl.showcase/sketches/components/frustum/perspectiveFrustum.js" lib1="https://cdn.jsdelivr.net/gh/freshfork/p5.EasyCam@1.2.1/p5.easycam.min.js" lib2="/p5.treegl.showcase/libs/p5.treegl/p5.treegl.js" lib3="https://cdn.rawgit.com/bitcraftlab/p5.gui/master/libraries/p5.gui.js" lib4="https://cdn.rawgit.com/bit101/quicksettings/master/quicksettings.js" width="425" height="725" >}}
 
 ### code 
 

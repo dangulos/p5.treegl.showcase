@@ -1,13 +1,8 @@
 var easycam;
 
-var size = 100;
-var X = true;
-var Y = true;
-var Z = true;
-var _X = false;
-var _Y = false;
-var _Z = false;
-var LABELS = false;
+var size = 200;
+var LABELS = true;
+var bits = ['default', 'X Y Z', '-X -Y -Z', 'everything'];
 
 var gui;
 
@@ -17,8 +12,8 @@ function setup() {
 
 	easycam = createEasyCam();
 
-	gui = createGui('Axes');
-	gui.addGlobals('size', 'X', 'Y', 'Z', '_X', '_Y', '_Z', 'LABELS');
+	gui = createGui('Double click to close');
+	gui.addGlobals('size', 'bits');
 }
 
 function draw() {
@@ -27,19 +22,27 @@ function draw() {
 
 	background(255);
 
-	push();
-	axes({ size: size, bits: parseSelection() });
-	pop();
-}
+	let selectedBits = 0;
 
-function parseSelection() {
-	let result = 0;
-	if (X) result = result | Tree.X;
-	if (Y) result = result | Tree.Y;
-	if (Z) result = result | Tree.Z;
-	if (_X) result = result | Tree._X;
-	if (_Y) result = result | Tree._Y;
-	if (_Z) result = result | Tree._Z;
-	if (LABELS) result = result | Tree.LABELS;
-	return result;
+	switch (bits) {
+		case 'X Y Z':
+			selectedBits = Tree.X | Tree.Y | Tree.Z;
+			break;
+
+		case '-X -Y -Z':
+			selectedBits = Tree._X | Tree._Y | Tree._Z;
+			break;
+
+		case 'everything':
+			selectedBits = Tree.X | Tree.Y | Tree.Z | Tree.LABELS | Tree._X | Tree._Y | Tree._Z;
+			break;
+
+		default:
+			selectedBits = Tree.X | Tree.Y | Tree.Z | Tree.LABELS;
+			break;
+	}
+
+	push();
+	axes({ size: size, bits: selectedBits });
+	pop();
 }

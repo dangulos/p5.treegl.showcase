@@ -16,13 +16,11 @@ function setup() {
 
 	easycam = createEasyCam();
 
-	gui = createGui('Axes');
+	gui = createGui('Double click to close');
 	gui.addGlobals('detail', 'topRadius', 'bottomRadius', 'cylinderHeight', 'topNormalX', 'topNormalY', 'bottomNormalX', 'bottomNormalY');
 }
 
 function draw() {
-	rotateX(-0.5);
-	rotateY(-0.5);
 
 	background(255);
 	stroke(0);
@@ -40,6 +38,7 @@ function draw() {
 	};
 
 	push();
+	translate(cylinderHeight/4,0,0)
 	pipe({
 		detail,
 		topRadius,
