@@ -1,7 +1,7 @@
 // gui params
-var x = 200;
-var y = 200;
-var size = 150;
+var x = 300;
+var y = 150;
+var size = 100;
 var shape = ['Tree.CIRCLE', 'Tree.SQUARE'];
 var selectedShape;
 
@@ -9,9 +9,10 @@ var gui;
 
 function setup() {
 	createCanvas(400, 400, WEBGL);
-	gui = createGui('Bullseye');
+	gui = createGui('Double click to close');
 
 	gui.addGlobals('x', 'y', 'size', 'shape');
+	y = 150;
 	noLoop();
 }
 

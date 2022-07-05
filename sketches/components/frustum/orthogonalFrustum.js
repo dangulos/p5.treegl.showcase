@@ -8,20 +8,20 @@ let persp = true;
 
 var left = 300;
 var right = 300;
-var frustum_width = 600;
+var frustum_width = 200;
 var bottom = 300;
 var topa = 300;
-var frustum_height = 600;
+var frustum_height = 200;
 var far = 500;
 
 var gui;
 
 function setup() {
     
-	createCanvas(300, 600);
+	createCanvas(400, 700);
     
-	fbo1 = createGraphics(width, height/2, WEBGL);
-	fbo2 = createGraphics(width, height/2, WEBGL);
+	fbo1 = createGraphics(400, 350, WEBGL);
+	fbo2 = createGraphics(400, 350, WEBGL);
 	fbo1.ortho(-fbo1.width / 2, fbo1.width / 2, -fbo1.height / 2, fbo1.height / 2, 1, 500);
 	// FBOs cams
 	cam1 = new Dw.EasyCam(fbo1._renderer, { distance: 200 });
@@ -39,21 +39,18 @@ function setup() {
 	};
 	// scene
 	colorMode(RGB, 1);
-	let trange = 100;
 	boxes = [];
-	for (let i = 0; i < 100; i++) {
-		boxes.push({
-			position: createVector(
-				(random() * 2 - 1) * trange,
-				(random() * 2 - 1) * trange,
-				(random() * 2 - 1) * trange
-			),
-			size: random() * 25 + 8,
-			color: color(random(), random(), random()),
-		});
+	for (let i = 0; i < 5; i++){
+		for (let j = 0; j < 5; j++) {
+			boxes.push({
+				position: createVector(i * 40 - 70, 0, j * 40 - 70),
+				size: 20,
+				color: color(random(), random(), random()),
+			});
+		}
 	}
 	print(fbo1.bounds());
-    gui = createGui('Frostum');
+    gui = createGui('Double click to close').setPosition(30, 350);
 
 	gui.addGlobals('frustum_width', 'frustum_height', 'far');
 }
@@ -80,7 +77,7 @@ function draw() {
 	fbo2.viewFrustum({ fbo: fbo1, bits: Tree.NEAR | Tree.FAR });
 	fbo2.pop();
 	beginHUD();
-	image(fbo2, 0, height/ 2);
+	image(fbo2, 0, 350);
 	endHUD();
 }
 

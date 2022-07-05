@@ -1,6 +1,6 @@
 // gui params
 var subdivisions = 10;
-var size = 200;
+var size = 250;
 var style = ['Tree.DOTS', 'Tree.SOLID'];
 var selectedstyle;
 
@@ -8,10 +8,13 @@ var gui;
 
 function setup() {
 	createCanvas(400, 400, WEBGL);
-	gui = createGui('Grid');
+	setAttributes('antialias', true);
+
+	easycam = createEasyCam();
+
+	gui = createGui('Double click to close');
 
 	gui.addGlobals('subdivisions', 'size', 'style');
-	noLoop();
 }
 
 function draw() {

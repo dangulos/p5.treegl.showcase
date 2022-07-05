@@ -8,16 +8,16 @@ let persp = true;
 
 
 var far = 500;
-var fovy = 100;
+var vertical_fov = 100;
 
 var gui;
 
 function setup() {
     
-	createCanvas(300, 600);
+	createCanvas(400, 700);
     
-	fbo1 = createGraphics(width, height/2, WEBGL);
-	fbo2 = createGraphics(width, height/2, WEBGL);
+	fbo1 = createGraphics(400, 350, WEBGL);
+	fbo2 = createGraphics(400, 350, WEBGL);
 	// FBOs cams
 	cam1 = new Dw.EasyCam(fbo1._renderer, { distance: 200 });
 	let state1 = cam1.getState();
@@ -34,27 +34,25 @@ function setup() {
 	};
 	// scene
 	colorMode(RGB, 1);
-	let trange = 100;
 	boxes = [];
-	for (let i = 0; i < 100; i++) {
-		boxes.push({
-			position: createVector(
-				(random() * 2 - 1) * trange,
-				(random() * 2 - 1) * trange,
-				(random() * 2 - 1) * trange
-			),
-			size: random() * 25 + 8,
-			color: color(random(), random(), random()),
-		});
+	for (let i = 0; i < 5; i++){
+		for (let j = 0; j < 5; j++) {
+			boxes.push({
+				position: createVector(i * 40 - 70, 0, j * 40 - 70),
+				size: 20,
+				color: color(random(), random(), random()),
+			});
+		}
 	}
 	print(fbo1.bounds());
-    gui = createGui('Frostum');
+	
+	gui = createGui('Double click to close').setPosition(30, 350);
 
-	gui.addGlobals('fovy', 'far');
+	gui.addGlobals('vertical_fov', 'far');
 }
 
 function draw() {
-    fbo1.perspective(fovy*(PI/3)/100, 1, 10, far);
+    fbo1.perspective(vertical_fov*(PI/3)/100, 1, 10, far);
 	fbo1.background(175, 125, 115);
 	fbo1.reset();
 	fbo1.axes({ size: 100, bits: Tree.X | Tree.YNEG });
@@ -75,7 +73,7 @@ function draw() {
 	fbo2.viewFrustum({ fbo: fbo1, bits: Tree.NEAR | Tree.FAR });
 	fbo2.pop();
 	beginHUD();
-	image(fbo2, 0, height/ 2);
+	image(fbo2, 0, 350);
 	endHUD();
 }
 

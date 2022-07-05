@@ -11,7 +11,7 @@ function setup() {
 
 	easycam = createEasyCam();
 
-	gui = createGui('Axes');
+	gui = createGui('Double click to close');
 	gui.addGlobals('detail', 'radius', 'height');
 }
 
