@@ -11,6 +11,7 @@ function setup() {
 	setAttributes('antialias', true);
 
 	easycam = createEasyCam();
+	easycam.setZoomScale(false);
 
 	gui = createGui('Double click to close');
 	gui.addGlobals('size', 'bits');

@@ -13,6 +13,7 @@ var bottom = 300;
 var topa = 300;
 var frustum_height = 200;
 var far = 500;
+var viewer = ['axes', 'arrow'];
 
 var gui;
 
@@ -25,11 +26,13 @@ function setup() {
 	fbo1.ortho(-fbo1.width / 2, fbo1.width / 2, -fbo1.height / 2, fbo1.height / 2, 1, 500);
 	// FBOs cams
 	cam1 = new Dw.EasyCam(fbo1._renderer, { distance: 200 });
+	cam1.setZoomScale(false);
 	let state1 = cam1.getState();
 	cam1.attachMouseListeners(this._renderer);
 	cam1.state_reset = state1; // state to use on reset (double-click/tap)
 	cam1.setViewport([0, 0, width / 2, height]);
 	cam2 = new Dw.EasyCam(fbo2._renderer, { rotation: [0.94, 0.33, 0, 0] });
+	cam2.setZoomScale(false);
 	cam2.attachMouseListeners(this._renderer);
 	let state2 = cam2.getState();
 	cam2.state_reset = state2; // state to use on reset (double-click/tap)
@@ -52,7 +55,7 @@ function setup() {
 	print(fbo1.bounds());
     gui = createGui('Double click to close').setPosition(30, 350);
 
-	gui.addGlobals('frustum_width', 'frustum_height', 'far');
+	gui.addGlobals('frustum_width', 'frustum_height', 'far', 'viewer');
 }
 
 function draw() {
@@ -74,7 +77,20 @@ function draw() {
 	fbo2.strokeWeight(3);
 	fbo2.stroke('magenta');
 	fbo2.fill(color(1, 0, 1, 0.3));
-	fbo2.viewFrustum({ fbo: fbo1, bits: Tree.NEAR | Tree.FAR });
+
+	let selectedViewer;
+	if(viewer === 'arrow'){
+		selectedViewer = () => {
+			fbo2.push();
+			fbo2.stroke('#0803FF');
+			fbo2.arrow({height: 50});
+			fbo2.pop();
+		};
+	} else {
+		selectedViewer = () => fbo2.axes({ size: 50, bits: Tree.X | Tree._X | Tree.Y | Tree._Y | Tree.Z | Tree._Z });
+	}
+
+	fbo2.viewFrustum({ fbo: fbo1, bits: Tree.NEAR | Tree.FAR, viewer: selectedViewer });
 	fbo2.pop();
 	beginHUD();
 	image(fbo2, 0, 350);
