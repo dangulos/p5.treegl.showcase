@@ -12,15 +12,15 @@ Axes draws three 3D orthogonal lines which can be used as a reference point when
 
 The **bits** parameter which axis to show. Even though this param is a number, it works as a [Bitmask](https://en.wikipedia.org/wiki/Mask_(computing)) (Similar [chmod](https://en.wikipedia.org/wiki/Chmod#Numerical_permissions)'s numerical permissions in GNU/Linux). This bitmask allows different options to be chosen in a sigle parameter. `p5.treegl` adds the `Tree` object which allows easy access to all the necesary bits to mark different options. Each option is ordered as follows: 
 
-| Description | Value in Tree | Binary | Decimal |
-| ----------- | ----------- | ----------- | ----------- |
-| Draws the X axis | Tree.X | 0000001 | 1 |
-| Draws the Y axis | Tree.Y | 0000010 | 2 |
-| Draws the Z axis | Tree.Z | 0000100 | 4 |
-| Draws the -X axis | Tree._X | 0001000 | 8 |
-| Draws the -Y axis | Tree._Y | 0010000 | 16 |
-| Draws the -Z axis | Tree._Z | 0100000 | 32 |
-| Draws labels that help identify each axis | Tree.LABELS | 1000000 | 64 |
+| Description | Value in Tree | Binary | 
+| ----------- | ----------- | ----------- | 
+| Draws the X axis | Tree.X | 0000001 | 
+| Draws the Y axis | Tree.Y | 0000010 | 
+| Draws the Z axis | Tree.Z | 0000100 | 
+| Draws the -X axis | Tree._X | 0001000 | 
+| Draws the -Y axis | Tree._Y | 0010000 | 
+| Draws the -Z axis | Tree._Z | 0100000 | 
+| Draws labels that help identify each axis | Tree.LABELS | 1000000 | 
 
 ## Showcase
 
